@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="Asset-Event">
+    <Description>Asset Event</Description>
+	<FaultRules/>
+	<DefaultFaultRule>
+        <AlwaysEnforce>true</AlwaysEnforce>
+        <Step>
+            <Name>SF-PostflowResponseTargetLogAggregator</Name>
+        </Step>
+    </DefaultFaultRule>
+	<PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>SF-PreflowRequestTargetLogAggregator</Name>
+            </Step>
+            <Step>
+                <Name>cf-Remove-Proxy-Auth-Header</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+	<Flows>
+        <Flow name="getEventById">
+        	<Condition>(targetOperation = &quot;getEventById&quot;)</Condition>
+			<Request>
+			</Request>
+			<Response>
+            </Response>
+        </Flow>
+        <Flow name="updateEvent">
+        	<Condition>(targetOperation = &quot;updateEvent&quot;)</Condition>
+			<Request>
+			</Request>
+			<Response>
+            </Response>
+        </Flow>
+        <Flow name="createAssetEvent">
+        	<Condition>(targetOperation = &quot;createAssetEvent&quot;)</Condition>
+			<Request>
+			</Request>
+			<Response>
+            </Response>
+        </Flow>
+        <Flow name="deleteEvent">
+        	<Condition>(targetOperation = &quot;deleteEvent&quot;)</Condition>
+			<Request>
+			</Request>
+			<Response>
+            </Response>
+        </Flow>
+	</Flows>
+    <PostFlow name="PostFlow">
+        <Request>
+            <Step>
+                <Name>SF-PostflowRequestTargetLogAggregator</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>SF-PostflowResponseTargetLogAggregator</Name>
+            </Step>
+        </Response>
+    </PostFlow>
+    <HTTPTargetConnection>
+    	<LoadBalancer>
+            <Server name="Asset-Event">
+                <IsEnabled>true</IsEnabled>
+            </Server>
+        </LoadBalancer>
+        <Path>/events</Path>
+    </HTTPTargetConnection>
+</TargetEndpoint>
